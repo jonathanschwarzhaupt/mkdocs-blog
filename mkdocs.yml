@@ -1,0 +1,23 @@
+site_name: Blog Tutorial
+site_description: an example blog set up following the tutorial
+site_url: http://www.jonathanschwarzhaupt.net
+
+theme:
+  name: material
+  features:
+    - navigation.indexes
+
+plugins:
+  - search
+  - blog:
+      archive_date_format: MMMM yyyy
+  - tags:
+      tags_file: blog/tags.md
+
+nav:
+  - Home: index.md
+  - Install: install.md
+  - Usage: usage.md
+  - Blog:
+      - blog/index.md
+      - Tags: blog/tags.md
