@@ -1,0 +1,534 @@
+{% extends "main.html" %} {% block tabs %} {{ super() }}
+<style>
+    /* Keep header in normal flow */
+    .md-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: none;
+        box-shadow: none;
+    }
+
+    /* Reset main container */
+    .md-main__inner {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hide default content */
+    .md-content {
+        display: none;
+    }
+
+    /* Main container adjustments */
+    .md-main {
+        display: block;
+        background: transparent;
+    }
+
+    /* Hide sidebars */
+    .md-sidebar {
+        display: none;
+    }
+
+    /* Full width container */
+    .md-container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    /* Hero Section - Natural document flow */
+    .hero-section {
+        background: linear-gradient(
+            180deg,
+            var(--md-primary-fg-color) 0%,
+            var(--md-primary-fg-color--dark) 100%
+        );
+        color: var(--md-primary-bg-color);
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        /* Negative margin to connect with header */
+        margin-top: calc(-1 * var(--md-header-height, 48px));
+        padding-top: var(--md-header-height, 48px);
+        /* For smooth parallax */
+        will-change: transform;
+        transition: transform 0s linear;
+    }
+
+    /* Pattern overlay */
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+            repeat;
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    /* Hero content - FLEXBOX layout for side-by-side */
+    .hero-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2rem;
+        gap: 3rem;
+    }
+
+    /* Stack vertically on mobile */
+    @media screen and (max-width: 767px) {
+        .hero-content {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    /* Profile image styling - smaller and round */
+    .hero-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+        .hero-image {
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .hero-image {
+            width: 250px;
+            height: 250px;
+        }
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        line-height: 1.2;
+    }
+
+    @media screen and (min-width: 768px) {
+        .hero-text h1 {
+            font-size: 3.5rem;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .hero-text h1 {
+            font-size: 4rem;
+        }
+    }
+
+    .hero-text p {
+        font-size: 1.25rem;
+        margin: 0 0 2rem 0;
+        opacity: 0.95;
+        line-height: 1.6;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-actions .md-button {
+        padding: 0.75rem 2rem;
+        border-radius: 2rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-actions .md-button--primary {
+        background: var(--md-primary-bg-color);
+        color: var(--md-primary-fg-color);
+        border: 2px solid var(--md-primary-bg-color);
+    }
+
+    .hero-actions .md-button--primary:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-actions .md-button:not(.md-button--primary) {
+        background: transparent;
+        color: var(--md-primary-bg-color);
+        border: 2px solid var(--md-primary-bg-color);
+    }
+
+    .hero-actions .md-button:not(.md-button--primary):hover {
+        background: var(--md-primary-bg-color);
+        color: var(--md-primary-fg-color);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: bounce 2s infinite;
+        color: var(--md-primary-bg-color);
+        opacity: 0.6;
+        z-index: 1;
+    }
+
+    @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        40% {
+            transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+            transform: translateX(-50%) translateY(-5px);
+        }
+    }
+
+    /* Blog Section */
+    .blog-section {
+        background: var(--md-default-bg-color);
+        padding: 4rem 2rem;
+        position: relative;
+        min-height: 100vh;
+    }
+
+    /* Wave divider */
+    .blog-section::before {
+        content: "";
+        position: absolute;
+        top: -80px;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: var(--md-default-bg-color);
+        clip-path: polygon(0 40px, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .blog-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .blog-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .blog-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--md-default-fg-color);
+        margin: 0 0 1rem 0;
+    }
+
+    .blog-header p {
+        font-size: 1.125rem;
+        color: var(--md-default-fg-color--light);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        .blog-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Blog Card Styles */
+    .blog-card {
+        background: var(--md-code-bg-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .blog-card.visible {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem 0;
+        color: var(--md-default-fg-color);
+    }
+
+    .blog-card h3 a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .blog-card h3 a:hover {
+        color: var(--md-primary-fg-color);
+    }
+
+    .blog-card-excerpt {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--md-default-fg-color--light);
+    }
+
+    .blog-more {
+        text-align: center;
+    }
+
+    .blog-more .md-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 2rem;
+        background: var(--md-primary-fg-color);
+        color: var(--md-primary-bg-color);
+        border-radius: 2rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .blog-more .md-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Hide footer on home */
+    .md-footer {
+        display: none;
+    }
+
+    /* Ensure smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+</style>
+
+<section class="hero-section" id="hero">
+    <div class="hero-content">
+        <!-- Image on the left -->
+        <img
+            src="/assets/images/profile.jpg"
+            alt="{{ config.site_name }}"
+            class="hero-image"
+        />
+
+        <!-- Text content on the right -->
+        <div class="hero-text">
+            <h1>{{ config.site_name }}</h1>
+            <p>{{ config.site_description }}</p>
+            <div class="hero-actions">
+                <a href="/about/" class="md-button md-button--primary">
+                    <span>About Me</span>
+                </a>
+                <a href="/blog/" class="md-button">
+                    <span>Explore Blog</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24" width="32" height="32">
+            <path
+                fill="currentColor"
+                d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+            />
+        </svg>
+    </div>
+</section>
+
+<section class="blog-section">
+    <div class="blog-container">
+        <div class="blog-header">
+            <h2>Recent Posts</h2>
+            <p>Thoughts on data engineering, solutions, and technology</p>
+        </div>
+
+        <div class="blog-grid">
+            <!-- Blog Post 1 -->
+            <article class="blog-card">
+                <h3>
+                    <a
+                        href="/blog/2025/08/08/home-plumbing-my-personal-data-platform/"
+                    >
+                        Home Plumbing my own data platform
+                    </a>
+                </h3>
+                <p class="blog-card-excerpt">
+                    I finally deployed Airflow 3 in my own Kubernetes cluster
+                    running on K3s and Flux to run DAGs using my own custom
+                    python package.
+                </p>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-card">
+                <h3>
+                    <a
+                        href="/blog/2025/08/14/plumbing-ai-into-my-personal-data-platform/"
+                    >
+                        Plumbing AI into my personal data platform
+                    </a>
+                </h3>
+                <p class="blog-card-excerpt">
+                    I brought AI capabilities to my personal data platform -
+                    home plumbing - to categorize my transactions.
+                </p>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-card">
+                <h3>
+                    <a
+                        href="/blog/2025/02/25/how-i-studied-for-the-az-104-exam/"
+                    >
+                        My AZ-104 study methods
+                    </a>
+                </h3>
+                <p class="blog-card-excerpt">
+                    Study routine and reflections after completing the AZ-104
+                    exam.
+                </p>
+            </article>
+        </div>
+
+        <div class="blog-more">
+            <a href="/blog/" class="md-button">
+                View All Posts
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                        fill="currentColor"
+                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                    />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Simple parallax effect on scroll
+    (function () {
+        const hero = document.getElementById("hero");
+        let ticking = false;
+
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const speed = 0.5; // Parallax speed
+
+            // Only apply parallax when hero is in viewport
+            if (scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * speed}px)`;
+            }
+
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        // Listen to scroll events
+        window.addEventListener("scroll", requestTick);
+
+        // Intersection Observer for blog cards fade-in
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add("visible");
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all blog cards - handle both DOMContentLoaded and immediate execution
+        function initBlogCards() {
+            const blogCards = document.querySelectorAll(".blog-card");
+            blogCards.forEach((card) => {
+                observer.observe(card);
+            });
+        }
+
+        // Run immediately if DOM is already loaded (for navigation cases)
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initBlogCards);
+        } else {
+            // DOM is already ready, run immediately
+            initBlogCards();
+        }
+    })();
+</script>
+
+{% endblock %} {% block content %}
+<!-- Override to prevent default content display -->
+{% endblock %}

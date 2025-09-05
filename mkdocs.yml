@@ -1,23 +1,118 @@
-site_name: Blog Tutorial
-site_description: an example blog set up following the tutorial
+# Project information
+site_name: Jonathan Schwarzhaupt
+site_description: Engineering Data Solutions
 site_url: http://www.jonathanschwarzhaupt.net
+site_author: Jonathan Schwarzhaupt
+
+# Repository
+repo_name: jonathanschwarzhaupt
+repo_url: https://github.com/jonathanschwarzhaupt
+
+copyright: Copyright &copy; 2025 Jonathan Schwarzhaupt
+
+extra_css:
+  - stylesheets/extra.css
 
 theme:
   name: material
+  custom_dir: overrides
+  palette:
+    scheme: "sage"
   features:
     - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    # - navigation.tabs.sticky
+    - navigation.instant.preview
+
+  # palette:
+  #   - media: "(prefers-color-scheme)"
+  #     toggle:
+  #       icon: material/brightness-auto
+  #       name: Switch to light mode
+  #   - media: "(prefers-color-scheme: light)"
+  #     scheme: default
+  #     primary: indigo
+  #     accent: indigo
+  #     toggle:
+  #       icon: material/toggle-switch
+  #       name: Switch to dark mode
+  #   - media: "(prefers-color-scheme: dark)"
+  #     scheme: slate
+  #     primary: black
+  #     accent: indigo
+  #     toggle:
+  #       icon: material/toggle-switch-off
+  #       name: Switch to system preference
+  font:
+    text: Roboto
+    code: Ubuntu Mono
+  favicon: assets/favicon.png
+  icon:
+    logo: fontawesome/solid/toilets-portable
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  # for images in markdown
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
 
 plugins:
   - search
+  - meta
   - blog:
+      blog_toc: true
       archive_date_format: MMMM yyyy
+      categories_allowed:
+        - Cloud
+        - Python
+        - Tools
+        - Data Engineering
+        - DevOps
+        - Personal Project
+      pagination_per_page: 5
   - tags:
       tags_file: blog/tags.md
 
+extra:
+  social:
+    - icon: fontawesome/brands/linkedin
+      name: Jonathan on LinkedIn
+      link: https://www.linkedin.com/in/jonathanschwarzhaupt
+    - icon: fontawesome/brands/github
+      name: Jonathan on GitHub
+      link: https://github.com/jonathanschwarzhaupt
+    - icon: /fontawesome/regular/envelope
+      name: send me an email
+      link: mailto:<email>
+
 nav:
   - Home: index.md
-  - Install: install.md
-  - Usage: usage.md
+  - About: about.md
   - Blog:
       - blog/index.md
       - Tags: blog/tags.md
+  - "Home Plumbing": plumbing.md

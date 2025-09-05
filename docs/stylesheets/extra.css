@@ -1,0 +1,6 @@
+/* Option A: "Sage Tech" - Muted blue-green/teal */
+[data-md-color-scheme="sage"] {
+    --md-primary-fg-color: #2e7d7a;
+    --md-primary-fg-color--light: #b2dfdb;
+    --md-primary-fg-color--dark: #1a4e4b;
+}
