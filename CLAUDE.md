@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+*Last updated: 2025-01-05*
+
 ## Common Development Commands
 
 **Development server:**
