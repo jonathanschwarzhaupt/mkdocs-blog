@@ -41,6 +41,8 @@ jobs:
         run: uv sync
 
       - name: Build MkDocs site
+        env:
+          GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
         run: uv run mkdocs build
 
       - name: Deploy to Azure Static Web Apps
