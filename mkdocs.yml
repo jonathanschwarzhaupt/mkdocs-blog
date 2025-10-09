@@ -93,6 +93,7 @@ plugins:
         - Data Engineering
         - DevOps
         - Personal Project
+        - Linux
       pagination_per_page: 5
   - tags:
       tags_file: blog/tags.md
