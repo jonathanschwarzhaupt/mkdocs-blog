@@ -1,6 +1,6 @@
 ---
 date:
-  created: 2028-10-08
+  created: 2025-10-08
 tags:
   - Linux
   - Bash
