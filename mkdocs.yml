@@ -11,122 +11,123 @@ repo_url: https://github.com/jonathanschwarzhaupt
 copyright: Copyright &copy; 2025 Jonathan Schwarzhaupt
 
 extra_css:
-  - stylesheets/extra.css
+    - stylesheets/extra.css
 
 theme:
-  name: material
-  custom_dir: overrides
-  palette:
-    scheme: "sage"
-  features:
-    - navigation.indexes
-    - navigation.instant
-    - navigation.instant.progress
-    - navigation.tracking
-    - navigation.tabs
-    - navigation.path
-    - navigation.indexes
-    - navigation.top
-    - toc.follow
-    - content.code.copy
-    - content.code.select
-    - content.code.annotate
-    # - navigation.tabs.sticky
-    - navigation.instant.preview
+    name: material
+    custom_dir: overrides
+    palette:
+        scheme: "sage"
+    features:
+        - navigation.indexes
+        - navigation.instant
+        - navigation.instant.progress
+        - navigation.tracking
+        - navigation.tabs
+        - navigation.path
+        - navigation.indexes
+        - navigation.top
+        - toc.follow
+        - content.code.copy
+        - content.code.select
+        - content.code.annotate
+        # - navigation.tabs.sticky
+        - navigation.instant.preview
 
-  # palette:
-  #   - media: "(prefers-color-scheme)"
-  #     toggle:
-  #       icon: material/brightness-auto
-  #       name: Switch to light mode
-  #   - media: "(prefers-color-scheme: light)"
-  #     scheme: default
-  #     primary: indigo
-  #     accent: indigo
-  #     toggle:
-  #       icon: material/toggle-switch
-  #       name: Switch to dark mode
-  #   - media: "(prefers-color-scheme: dark)"
-  #     scheme: slate
-  #     primary: black
-  #     accent: indigo
-  #     toggle:
-  #       icon: material/toggle-switch-off
-  #       name: Switch to system preference
-  font:
-    text: Roboto
-    code: Ubuntu Mono
-  favicon: assets/favicon.png
-  icon:
-    logo: fontawesome/solid/toilets-portable
+    # palette:
+    #   - media: "(prefers-color-scheme)"
+    #     toggle:
+    #       icon: material/brightness-auto
+    #       name: Switch to light mode
+    #   - media: "(prefers-color-scheme: light)"
+    #     scheme: default
+    #     primary: indigo
+    #     accent: indigo
+    #     toggle:
+    #       icon: material/toggle-switch
+    #       name: Switch to dark mode
+    #   - media: "(prefers-color-scheme: dark)"
+    #     scheme: slate
+    #     primary: black
+    #     accent: indigo
+    #     toggle:
+    #       icon: material/toggle-switch-off
+    #       name: Switch to system preference
+    font:
+        text: Roboto
+        code: Ubuntu Mono
+    favicon: assets/favicon.png
+    icon:
+        logo: fontawesome/solid/toilets-portable
 
 markdown_extensions:
-  - attr_list
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
-  # for images in markdown
-  - attr_list
-  - md_in_html
-  - pymdownx.blocks.caption
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
+    - attr_list
+    - pymdownx.emoji:
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    - pymdownx.highlight:
+          anchor_linenums: true
+          line_spans: __span
+          pygments_lang_class: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
+    # for images in markdown
+    - attr_list
+    - md_in_html
+    - pymdownx.blocks.caption
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
 
 plugins:
-  - search
-  - meta
-  - blog:
-      blog_toc: true
-      archive: true
-      archive_name: Archive
-      archive_date_format: MMMM yyyy
-      archive_url_date_format: yyyy/MM
-      categories_allowed:
-        - Cloud
-        - Python
-        - Tools
-        - Data Engineering
-        - DevOps
-        - Personal Project
-        - Linux
-      pagination_per_page: 5
-  - tags:
-      tags_file: blog/tags.md
+    - search
+    - meta
+    - blog:
+          blog_toc: true
+          archive: true
+          archive_name: Archive
+          archive_date_format: MMMM yyyy
+          archive_url_date_format: yyyy/MM
+          categories_allowed:
+              - Cloud
+              - Python
+              - Tools
+              - Data Engineering
+              - DevOps
+              - Personal Project
+              - Homelab
+              - Linux
+          pagination_per_page: 5
+    - tags:
+          tags_file: blog/tags.md
 
 extra:
-  social:
-    - icon: fontawesome/brands/linkedin
-      name: Jonathan on LinkedIn
-      link: https://www.linkedin.com/in/jonathanschwarzhaupt
-    - icon: fontawesome/brands/github
-      name: Jonathan on GitHub
-      link: https://github.com/jonathanschwarzhaupt
-    - icon: /fontawesome/regular/envelope
-      name: send me an email
-      link: mailto:<email>
-  # google analytics
-  analytics:
-    provider: google
-    property: !ENV GOOGLE_ANALYTICS_KEY
-  consent:
-    title: Cookie consent
-    description: >-
-      We use cookies to recognize your repeated visits and preferences, as well
-      as to measure the effectiveness of the blog and documentation. With your consent, you're helping us to
-      make our documentation better.
+    social:
+        - icon: fontawesome/brands/linkedin
+          name: Jonathan on LinkedIn
+          link: https://www.linkedin.com/in/jonathanschwarzhaupt
+        - icon: fontawesome/brands/github
+          name: Jonathan on GitHub
+          link: https://github.com/jonathanschwarzhaupt
+        - icon: /fontawesome/regular/envelope
+          name: send me an email
+          link: mailto:<email>
+    # google analytics
+    analytics:
+        provider: google
+        property: !ENV GOOGLE_ANALYTICS_KEY
+    consent:
+        title: Cookie consent
+        description: >-
+            We use cookies to recognize your repeated visits and preferences, as well
+            as to measure the effectiveness of the blog and documentation. With your consent, you're helping us to
+            make our documentation better.
 
 nav:
-  - Home: index.md
-  - About: about.md
-  - Blog:
-      - blog/index.md
-      - Tags: blog/tags.md
-  - "Home Plumbing": plumbing.md
+    - Home: index.md
+    - About: about.md
+    - Blog:
+          - blog/index.md
+          - Tags: blog/tags.md
+    - "Home Plumbing": plumbing.md
